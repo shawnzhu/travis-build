@@ -36,10 +36,10 @@ travis_cmd() {
     case "$1" in
       --assert)  assert=true; shift ;;
       --echo)    output=true; shift ;;
-      --display) display=$2; shift 2;;
+      --display) display=$2;  shift 2;;
       --retry)   retry=true;  shift ;;
       --timing)  timing=true; shift ;;
-      --secure)  secure=" 2>/dev/null"; shift;;
+      --secure)  secure=" 2>/dev/null"; shift ;;
       *) break ;;
     esac
   done
