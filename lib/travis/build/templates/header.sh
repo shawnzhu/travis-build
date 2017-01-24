@@ -67,6 +67,7 @@ travis_cmd() {
 ${ANSI_RED}Please be sure to escape special characters such as ' ' and '$'.${ANSI_CLEAR}
 ${ANSI_RED}For more information, see http://www.tldp.org/LDP/abs/html/special-chars.html.${ANSI_CLEAR}"
     fi
+    unset secure
   fi
 
   if [[ -n "$timing" ]]; then
