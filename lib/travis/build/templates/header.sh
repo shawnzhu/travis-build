@@ -26,7 +26,7 @@ TRAVIS_TEST_RESULT=
 TRAVIS_CMD=
 
 travis_cmd() {
-  local assert output display retry timing cmd result
+  local assert output display retry timing cmd result secure
 
   cmd=$1
   TRAVIS_CMD=$cmd
@@ -36,14 +36,10 @@ travis_cmd() {
     case "$1" in
       --assert)  assert=true; shift ;;
       --echo)    output=true; shift ;;
-      --display)
-        display=$2;
-        if [[ $display = *[secure]* ]]; then
-          secure=" 2>/dev/null"
-        fi
-        shift 2;;
+      --display) display=$2; shift 2;;
       --retry)   retry=true;  shift ;;
       --timing)  timing=true; shift ;;
+      --secure)  secure=" 2>/dev/null"; shift;;
       *) break ;;
     esac
   done
@@ -67,7 +63,6 @@ travis_cmd() {
 ${ANSI_RED}Please be sure to escape special characters such as ' ' and '$'.${ANSI_CLEAR}
 ${ANSI_RED}For more information, see http://www.tldp.org/LDP/abs/html/special-chars.html.${ANSI_CLEAR}"
     fi
-    unset secure
   fi
 
   if [[ -n "$timing" ]]; then
