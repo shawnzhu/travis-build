@@ -36,7 +36,12 @@ travis_cmd() {
     case "$1" in
       --assert)  assert=true; shift ;;
       --echo)    output=true; shift ;;
-      --display) display=$2;  shift 2;;
+      --display)
+        display=$2;
+        if [[ $display = *[secure]* ]]; then
+          secure=" 2>/dev/null"
+        fi
+        shift 2;;
       --retry)   retry=true;  shift ;;
       --timing)  timing=true; shift ;;
       *) break ;;
@@ -57,7 +62,7 @@ travis_cmd() {
   else
     eval "$cmd $secure"
     result=$?
-    if [[ $display = *[secure]* && $result -ne 0 ]]; then
+    if [[ $result -ne 0 ]]; then
       echo -e "${ANSI_RED}The previous command failed, possibly due to a malformed secure environment variable.${ANSI_CLEAR}
 ${ANSI_RED}Please be sure to escape special characters such as ' ' and '$'.${ANSI_CLEAR}
 ${ANSI_RED}For more information, see http://www.tldp.org/LDP/abs/html/special-chars.html.${ANSI_CLEAR}"
