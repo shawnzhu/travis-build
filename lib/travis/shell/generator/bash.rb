@@ -144,8 +144,9 @@ module Travis
         private
 
           def handle_secure_vars(key, value, options)
-            if options[:echo] && options[:secure]
+            if options[:echo] && options.delete(:secure)
               options[:echo] = "export #{key}=[secure]"
+              options[:secure_cmd] = true
               value.untaint
             end
             [key, value, options]
